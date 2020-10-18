@@ -48,7 +48,7 @@
         </div>
 [{/oxhasrights}]
 
-<div class="details-info" itemscope itemtype="http://schema.org/Product">
+<div class="details-info">
     <div class="row">
         <div class="col-12 col-md-4 details-col-left">
             [{* article picture with zoom *}]

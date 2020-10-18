@@ -84,24 +84,21 @@
         <div class="spacer"></div>
         <div class="reviews-landscape">
             [{foreach from=$oView->getReviews() item=review name=ReviewsCounter}]
-                <div class="card" id="reviewName_[{$smarty.foreach.ReviewsCounter.iteration}]" itemprop="review" itemscope itemtype="http://schema.org/Review">
-                    [{* Bloofusion Google-Produkt-Markup für Google *}]
-                    <div class="hidden">
-                        <span itemprop="itemreviewed">[{$oDetailsProduct->oxarticles__oxtitle->value}] [{$oDetailsProduct->oxarticles__oxvarselect->value}]</span>
-                        <span itemprop="name">[{$review->oxreviews__oxtext->value|truncate:100}]</span>
-                    </div>
+                <div class="card" id="review_[{$review->oxreviews__oxid->value}]" itemprop="review" itemscope itemtype="https://schema.org/Review">
                     [{block name="widget_reviews_record"}]
                         <div class="card-header">
                             <div class="row">
                                 <div class="col-md-6 writer">
-                                    <span itemprop="author">[{$review->oxuser__oxfname->value}]</span> [{oxmultilang ident="WRITES"}]
-                                    <span>
-                                        <time itemprop="datePublished" datetime="[{$review->oxreviews__oxcreate->value|date_format:"%Y-%m-%d"}]">[{$review->oxreviews__oxcreate->value|date_format:"%d.%m.%Y"}]</time>
+                                    <span itemprop="datePublished" content="[{$review->oxreviews__oxcreate->value|date_format:"%Y-%m-%d"}]">
+                                        [{$review->oxreviews__oxcreate->value|date_format:"%d.%m.%Y"}]
+                                    </span>&nbsp;|&nbsp;
+                                    <span itemprop="author" itemscope itemtype="http://schema.org/Person">
+                                        <b itemprop="name">[{$review->oxuser__oxfname->value}]</b>&nbsp;[{oxmultilang ident="WRITES"}]
                                     </span>
                                 </div>
                                 <div class="col-md-6 rating">
                                     [{if $review->oxreviews__oxrating->value}]
-                                        <div class="float-right text-warning" itemprop="reviewRating" itemscope itemtype="http://schema.org/Rating">
+                                        <div class="float-right text-warning" itemscope itemprop="reviewRating" itemtype="http://schema.org/Rating">
                                             [{section name="starRatings" start=0 loop=5}]
                                                 [{if $review->oxreviews__oxrating->value >= $smarty.section.starRatings.iteration}]
                                                     <i class="fas fa-star"></i>
@@ -120,7 +117,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="card-body" id="reviewText_[{$smarty.foreach.ReviewsCounter.iteration}]" itemprop="description">[{$review->oxreviews__oxtext->value}]</div>
+                        <div class="card-body" itemprop="reviewBody">[{$review->oxreviews__oxtext->value}]</div>
                     [{/block}]
                 </div>
             [{/foreach}]
